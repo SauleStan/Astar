@@ -3,7 +3,7 @@ from Node import Node
 from PriorityEntry import PriorityEntry
 from Actions import Action
 
-initialState = [2, 3, 7, 1, 4, 8, 0, 5, 6]
+initialState = [2, 3, 7, 1, 4, 8, 0, 6, 5]
 # initialState = [0, 1, 3, 4, 2, 6, 7, 5, 8]
 goalState = [1, 2, 3, 4, 5, 6, 7, 8, 0]
 depth = 0
@@ -18,6 +18,23 @@ def Solution(node):
     print("Step: ", node.depth)
     node.showState()
 
+# Function to check whether puzzle is solvable
+# Inversion count on the state list should be even, then puzzle is solvable
+# Since the array index for the number is the same as index+1,
+# We can check the amount of inversions by taking away the index place from the number
+def IsSolvable(state):
+    inversions = 0
+    for index, number in enumerate(state):
+        if(number==0):
+            continue
+        inversions += abs(number - (index + 1))
+    
+    # If inversions count is not even, puzzle is not solvable
+    if (inversions % 2) != 0:
+        return False
+    else:
+        return True
+
 # Use heap as frontier list for priority queue behaviour
 frontier = []
 heapq.heappush(frontier, (initialNode.fval, initialNode.state, initialNode))
@@ -31,9 +48,13 @@ explored = []
 if __name__ == "__main__":
     actions = ["UP", "DOWN", "LEFT", "RIGHT"]
     currentState = initialState
-
-
+    
     while True:
+        solvable = IsSolvable(currentState)
+        if (not solvable):
+            print("Initial state is unsolvable.")
+            break
+
         if len(frontier) == 0:
             break
         
