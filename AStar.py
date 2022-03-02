@@ -15,6 +15,7 @@ initialNode = Node(initialState, None, depth, goalState)
 def Solution(node):
     if(node.parent != None):
         Solution(node.parent)
+    print("Step: ", node.depth)
     node.showState()
 
 # Use heap as frontier list for priority queue behaviour
