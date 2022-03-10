@@ -1,6 +1,7 @@
 import heapq
 from Node import Node
 from Actions import Action
+from Parser import ParseCmd
 
 #  Function to recursively return the states from the start node to the supplied node
 def Solution(node):
@@ -29,8 +30,13 @@ def IsSolvable(state):
         return True
 
 if __name__ == "__main__":
-    initialState = [2, 3, 7, 1, 4, 8, 0, 6, 5]
+    # Gets the initial state list from cmd
+    initialState = ParseCmd()
+
+    # The end state of the program
     goalState = [1, 2, 3, 4, 5, 6, 7, 8, 0]
+
+    # Starting depth
     depth = 0
 
     # Starting node
